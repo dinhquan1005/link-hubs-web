@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng bán sản phẩm | WebMarket</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 transition-colors duration-200 text-slate-800 dark:text-slate-200 font-sans">
+
+    <!-- Header chuyên nghiệp -->
+    <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Cột trái: Logo -->
+            <a href="index.html" class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-indigo-600"></i> WebMarket
+            </a>
+            
+            <!-- Cột phải: Menu Auth, DarkMode, Giỏ hàng -->
+            <div class="flex items-center gap-4 sm:gap-6 md:gap-8">
+                <!-- Khu vực Auth (JS tự điền) -->
+                <div id="auth-menu-container" class="flex items-center"></div>
+
+                <div class="w-px h-6 bg-slate-300 dark:bg-slate-700 hidden sm:block"></div>
+                
+                <button id="theme-toggle" class="text-slate-500 hover:text-indigo-600 transition-colors text-lg"><i class="fa-solid fa-moon"></i></button>
+                
+                <a href="cart.html" class="relative text-slate-700 dark:text-slate-300 hover:text-indigo-600 transition-colors text-xl">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cart-badge" class="absolute -top-2 -right-2 bg-rose-500 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center border-2 border-white dark:border-slate-900 box-content">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-10 max-w-3xl">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-8 md:p-10">
+            <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Đăng bán Giao diện</h1>
+            <p class="text-slate-500 mb-8">Điền thông tin chi tiết về mã nguồn của bạn để đăng lên hệ thống WebMarket.</p>
+
+            <form id="add-product-form" class="space-y-6">
+                <!-- Hàng 1 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Tên Template *</label>
+                        <input type="text" id="p-name" required class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="VD: ProAdmin Dashboard">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Chuyên mục *</label>
+                        <select id="p-category" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <option value="shop">E-Commerce / Bán hàng</option>
+                            <option value="admin">Admin Dashboard</option>
+                            <option value="portfolio">Portfolio / Cá nhân</option>
+                            <option value="blog">Blog / Tin tức</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Hàng 2 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Giá bán ($) *</label>
+                        <input type="number" id="p-price" required min="0" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="0 = Miễn phí">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Công nghệ (cách nhau dấu phẩy)</label>
+                        <input type="text" id="p-tech" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="VD: HTML5, Tailwind, React">
+                    </div>
+                </div>
+
+                <!-- Nâng cấp: Tải file hoặc Nhập Link -->
+                <div class="border-2 border-dashed border-indigo-200 dark:border-indigo-900/50 bg-indigo-50/50 dark:bg-slate-900/50 rounded-2xl p-6">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4"><i class="fa-solid fa-file-zipper text-indigo-500"></i> Mã Nguồn & Demo</h3>
+                    
+                    <div class="space-y-4">
+                        <!-- Tùy chọn 1: Upload File -->
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600 dark:text-slate-400 mb-2">1. Tải lên tệp ZIP (Tối đa 50MB)</label>
+                            <div class="relative flex items-center justify-center w-full h-16 border-2 border-slate-300 dark:border-slate-600 border-dotted rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition cursor-pointer overflow-hidden">
+                                <div class="flex flex-col items-center justify-center pt-2 pb-2">
+                                    <p class="text-sm text-slate-500 dark:text-slate-400"><span class="font-semibold text-indigo-600">Nhấn để tải lên</span> hoặc kéo thả tệp</p>
+                                </div>
+                                <input id="p-file" type="file" accept=".zip,.rar" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="document.getElementById('file-name').innerText = this.files[0] ? this.files[0].name : ''">
+                            </div>
+                            <p id="file-name" class="text-xs text-emerald-600 font-medium mt-2 text-center"></p>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 py-2">
+                            <div class="h-px bg-slate-200 dark:bg-slate-700 flex-1"></div>
+                            <span class="text-xs text-slate-400 font-bold uppercase">HOẶC</span>
+                            <div class="h-px bg-slate-200 dark:bg-slate-700 flex-1"></div>
+                        </div>
+
+                        <!-- Tùy chọn 2: Điền link Demo -->
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600 dark:text-slate-400 mb-2">2. Nhập URL Live Demo</label>
+                            <input type="url" id="p-demo" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="https://your-demo-link.com">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Các trường còn lại -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Link Ảnh Bìa (Cover Image URL) *</label>
+                    <input type="url" id="p-image" required class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="https://example.com/image.jpg">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Mô tả ngắn *</label>
+                    <input type="text" id="p-short" required class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Tóm tắt 1 câu về template...">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Mô tả chi tiết *</label>
+                    <textarea id="p-desc" required rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Viết thông tin chi tiết về tính năng..."></textarea>
+                </div>
+
+                <div class="pt-6">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-500/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Đăng sản phẩm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.getElementById('add-product-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!App.state.currentUser) {
+                App.showToast('Vui lòng đăng nhập để đăng bán!', 'error');
+                App.showAuthModal('login');
+                return;
+            }
+
+            const fileInput = document.getElementById('p-file').files[0];
+            const demoInput = document.getElementById('p-demo').value.trim();
+            let finalDemoUrl = "";
+
+            const submitBtn = document.querySelector('button[type="submit"]');
+            
+            // NẾU NGƯỜI DÙNG TẢI LÊN FILE ZIP
+            if (fileInput) {
+                if (!fileInput.name.endsWith('.zip')) {
+                    return App.showToast('Chỉ hỗ trợ file định dạng .zip!', 'error');
+                }
+
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang xử lý...';
+                submitBtn.disabled = true;
+
+                // Tạo "Gói hàng" (FormData) chứa file ZIP để gửi lên Backend
+                const formData = new FormData();
+                formData.append('templateZip', fileInput);
+
+                try {
+                    // Gửi file đến API của Node.js
+                    const response = await fetch('http://localhost:3000/api/upload-template', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
+
+                    if (data.success) {
+                        finalDemoUrl = data.demoUrl; // Nhận lại link nội bộ từ Server trả về
+                        App.showToast(data.message, 'success');
+                    } else {
+                        submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Đăng sản phẩm';
+                        submitBtn.disabled = false;
+                        return App.showToast(data.message, 'error');
+                    }
+                } catch (error) {
+                    submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Đăng sản phẩm';
+                    submitBtn.disabled = false;
+                    return App.showToast('Không thể kết nối tới Server. Node.js đã chạy chưa?', 'error');
+                }
+            } 
+            // NẾU NGƯỜI DÙNG ĐIỀN LINK TRỰC TIẾP
+            else if (demoInput) {
+                finalDemoUrl = demoInput;
+            } else {
+                return App.showToast('Bạn phải tải lên file ZIP hoặc nhập link Demo!', 'error');
+            }
+
+            // TIẾN HÀNH LƯU VÀO DATABASE ẢO NHƯ CŨ
+            const newProduct = {
+                id: Date.now(),
+                name: document.getElementById('p-name').value,
+                category: document.getElementById('p-category').value,
+                price: parseInt(document.getElementById('p-price').value),
+                sales: 0,
+                rating: 5.0,
+                author: App.state.currentUser.name,
+                image: document.getElementById('p-image').value,
+                shortDesc: document.getElementById('p-short').value,
+                desc: document.getElementById('p-desc').value,
+                tech: document.getElementById('p-tech').value.split(',').map(t => t.trim()),
+                features: ["Sản phẩm mới ra mắt", "Hỗ trợ 24/7 từ Tác giả", "100% Mã nguồn sạch"],
+                demoUrl: finalDemoUrl
+            };
+
+            App.products.push(newProduct);
+            localStorage.setItem('webmarket_products', JSON.stringify(App.products));
+
+            submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Đăng thành công!';
+            App.showToast('Giao diện đã lên sàn!', 'success');
+            
+            setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+        });
+    </script>
+</body>
+</html>

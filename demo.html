@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3b82f6; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="h-screen w-screen overflow-hidden flex flex-col bg-slate-900">
+
+    <div class="h-14 bg-slate-900 text-white flex items-center justify-between px-4 border-b border-slate-800 shadow-md flex-shrink-0 z-10">
+        <a href="index.html" class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors">
+            <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">Quay lại</span>
+        </a>
+        <div id="demo-title" class="font-semibold text-lg tracking-wide hidden sm:block"></div>
+        <button id="buy-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded text-sm font-bold transition-colors flex items-center gap-2">
+            <i class="fa-solid fa-cart-shopping"></i> Mua Ngay
+        </button>
+    </div>
+
+    <div class="relative flex-1 w-full bg-white">
+        <div id="loader-overlay" class="absolute inset-0 bg-white flex flex-col items-center justify-center z-10 transition-opacity duration-500">
+            <div class="loader mb-4"></div><p class="text-slate-600 font-medium">Đang tải demo...</p>
+        </div>
+        <iframe id="demo-frame" src="" class="w-full h-full border-none"></iframe>
+    </div>
+
+    <!-- CHỈ CẦN GỌI MAIN.JS LÀ ĐỦ -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
