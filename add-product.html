@@ -130,88 +130,90 @@
 
     <script src="assets/js/main.js"></script>
     <script>
-        document.getElementById('add-product-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            if (!App.state.currentUser) {
-                App.showToast('Vui lòng đăng nhập để đăng bán!', 'error');
-                App.showAuthModal('login');
-                return;
+    document.getElementById('add-product-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!App.state.currentUser) {
+            App.showToast('Vui lòng đăng nhập để đăng bán!', 'error');
+            App.showAuthModal('login');
+            return;
+        }
+
+        const fileInput = document.getElementById('p-file').files[0];
+        const demoInput = document.getElementById('p-demo').value.trim();
+        
+        // KHAI BÁO 2 BIẾN ĐỂ ĐÓN LINK TỪ SERVER
+        let finalDemoUrl = "";
+        let finalDownloadUrl = ""; 
+
+        const submitBtn = document.querySelector('button[type="submit"]');
+        
+        if (fileInput) {
+            if (!fileInput.name.endsWith('.zip')) {
+                return App.showToast('Chỉ hỗ trợ file định dạng .zip!', 'error');
             }
 
-            const fileInput = document.getElementById('p-file').files[0];
-            const demoInput = document.getElementById('p-demo').value.trim();
-            let finalDemoUrl = "";
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang xử lý...';
+            submitBtn.disabled = true;
 
-            const submitBtn = document.querySelector('button[type="submit"]');
-            
-            // NẾU NGƯỜI DÙNG TẢI LÊN FILE ZIP
-            if (fileInput) {
-                if (!fileInput.name.endsWith('.zip')) {
-                    return App.showToast('Chỉ hỗ trợ file định dạng .zip!', 'error');
-                }
+            const formData = new FormData();
+            formData.append('templateZip', fileInput);
 
-                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang xử lý...';
-                submitBtn.disabled = true;
+            try {
+                const response = await fetch('/api/upload-template', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
 
-                // Tạo "Gói hàng" (FormData) chứa file ZIP để gửi lên Backend
-                const formData = new FormData();
-                formData.append('templateZip', fileInput);
-
-                try {
-                    // Gửi file đến API của Node.js
-                    const response = await fetch('http://localhost:3000/api/upload-template', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    const data = await response.json();
-
-                    if (data.success) {
-                        finalDemoUrl = data.demoUrl; // Nhận lại link nội bộ từ Server trả về
-                        App.showToast(data.message, 'success');
-                    } else {
-                        submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Đăng sản phẩm';
-                        submitBtn.disabled = false;
-                        return App.showToast(data.message, 'error');
-                    }
-                } catch (error) {
+                if (data.success) {
+                    finalDemoUrl = data.demoUrl; 
+                    finalDownloadUrl = data.downloadUrl; // Lấy link file source.zip từ Server
+                    App.showToast(data.message, 'success');
+                } else {
                     submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Đăng sản phẩm';
                     submitBtn.disabled = false;
-                    return App.showToast('Không thể kết nối tới Server. Node.js đã chạy chưa?', 'error');
+                    return App.showToast(data.message, 'error');
                 }
-            } 
-            // NẾU NGƯỜI DÙNG ĐIỀN LINK TRỰC TIẾP
-            else if (demoInput) {
-                finalDemoUrl = demoInput;
-            } else {
-                return App.showToast('Bạn phải tải lên file ZIP hoặc nhập link Demo!', 'error');
+            } catch (error) {
+                submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Đăng sản phẩm';
+                submitBtn.disabled = false;
+                return App.showToast('Lỗi kết nối Server!', 'error');
             }
+        } 
+        else if (demoInput) {
+            finalDemoUrl = demoInput;
+            finalDownloadUrl = demoInput; // Nếu người dùng nhập link tay, cho download link đó luôn
+        } else {
+            return App.showToast('Bạn phải tải lên file ZIP hoặc nhập link Demo!', 'error');
+        }
 
-            // TIẾN HÀNH LƯU VÀO DATABASE ẢO NHƯ CŨ
-            const newProduct = {
-                id: Date.now(),
-                name: document.getElementById('p-name').value,
-                category: document.getElementById('p-category').value,
-                price: parseInt(document.getElementById('p-price').value),
-                sales: 0,
-                rating: 5.0,
-                author: App.state.currentUser.name,
-                image: document.getElementById('p-image').value,
-                shortDesc: document.getElementById('p-short').value,
-                desc: document.getElementById('p-desc').value,
-                tech: document.getElementById('p-tech').value.split(',').map(t => t.trim()),
-                features: ["Sản phẩm mới ra mắt", "Hỗ trợ 24/7 từ Tác giả", "100% Mã nguồn sạch"],
-                demoUrl: finalDemoUrl
-            };
+        // LƯU VÀO DATABASE MỚI CÓ TRƯỜNG downloadUrl
+        const newProduct = {
+            id: Date.now(),
+            name: document.getElementById('p-name').value,
+            category: document.getElementById('p-category').value,
+            price: parseInt(document.getElementById('p-price').value),
+            sales: 0,
+            rating: 5.0,
+            author: App.state.currentUser.name,
+            image: document.getElementById('p-image').value,
+            shortDesc: document.getElementById('p-short').value,
+            desc: document.getElementById('p-desc').value,
+            tech: document.getElementById('p-tech').value.split(',').map(t => t.trim()),
+            features: ["Sản phẩm mới ra mắt", "100% Mã nguồn sạch"],
+            demoUrl: finalDemoUrl,
+            downloadUrl: finalDownloadUrl // LƯU TRƯỜNG NÀY ĐỂ TRANG PURCHASES GỌI ĐẾN
+        };
 
-            App.products.push(newProduct);
-            localStorage.setItem('webmarket_products', JSON.stringify(App.products));
+        App.state.productsDB.push(newProduct);
+        App.saveProductsDB();
 
-            submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Đăng thành công!';
-            App.showToast('Giao diện đã lên sàn!', 'success');
-            
-            setTimeout(() => { window.location.href = 'index.html'; }, 1500);
-        });
-    </script>
+        submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Đăng thành công!';
+        App.showToast('Giao diện đã lên sàn!', 'success');
+        
+        setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+    });
+</script>
 </body>
 </html>

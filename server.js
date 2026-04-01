@@ -56,30 +56,29 @@ app.post('/api/upload-template', upload.single('templateZip'), async (req, res) 
         // 1. Giải nén
         await extract(req.file.path, { dir: extractToPath });
 
-        // 2. Xóa file ZIP tạm
-        fs.unlinkSync(req.file.path);
+        // 2. CHỈNH SỬA Ở ĐÂY: Lưu lại file ZIP để khách hàng có thể tải về (Đặt tên là source.zip)
+        const sourceZipPath = path.join(extractToPath, 'source.zip');
+        fs.copyFileSync(req.file.path, sourceZipPath); // Copy file gốc vào thư mục
+        fs.unlinkSync(req.file.path); // Xóa file tạm ở thư mục uploads đi
 
         // 3. Tự động truy lùng file index.html
         const relativeIndexPath = findIndexHtml(extractToPath);
 
         if (!relativeIndexPath) {
-            // Nếu ZIP này hoàn toàn không chứa file index.html nào, xóa luôn thư mục vừa giải nén cho sạch máy
             fs.rmSync(extractToPath, { recursive: true, force: true });
-            return res.status(400).json({ 
-                success: false, 
-                message: 'Không tìm thấy file index.html trong file ZIP này! Vui lòng kiểm tra lại source code.' 
-            });
+            return res.status(400).json({ success: false, message: 'Không tìm thấy index.html!' });
         }
 
-        // 4. Tạo đường link chính xác tuyệt đối
+        // 4. Tạo 2 đường link: 1 để xem Demo, 1 để tải file ZIP
         const demoUrl = `templates_demo/${folderName}/${relativeIndexPath}`;
+        const downloadUrl = `templates_demo/${folderName}/source.zip`;
 
         res.json({ 
             success: true, 
-            message: 'Tải lên và xử lý thành công!',
-            demoUrl: demoUrl 
+            message: 'Tải lên thành công!',
+            demoUrl: demoUrl,
+            downloadUrl: downloadUrl // Trả về link tải cho Frontend
         });
-
     } catch (error) {
         console.error("Lỗi giải nén:", error);
         // Xóa file tạm nếu lỗi

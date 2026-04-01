@@ -53,12 +53,14 @@
 <script>
     App.initProductPage = function() {
         const id = parseInt(new URLSearchParams(window.location.search).get('id'));
-        const p = this.products.find(x => x.id === id);
+        
+        // Đã sửa thành this.state.productsDB
+        const p = this.state.productsDB.find(x => x.id === id); 
         if (!p) { window.location.href = 'index.html'; return; }
         document.title = `${p.name} - WebMarket`;
 
-        // Lấy 3 sản phẩm liên quan (cùng category, khác sản phẩm hiện tại)
-        const related = this.products.filter(item => item.category === p.category && item.id !== p.id).slice(0, 3);
+        // Lấy 3 sản phẩm liên quan (Cũng sửa thành this.state.productsDB)
+        const related = this.state.productsDB.filter(item => item.category === p.category && item.id !== p.id).slice(0, 3);
         let relatedHTML = '';
         if(related.length > 0) {
             relatedHTML = related.map(item => `
@@ -80,32 +82,46 @@
                 </div>`;
         }
 
-        
-        // Chú ý: Đây là phần body được nâng cấp
         document.getElementById('product-detail-container').innerHTML = `
-            <!-- Cột trái -->
-            <div class="lg:w-2/3 space-y-8">
-                <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-2 shadow-sm">
-                    <img src="${p.image}" class="w-full h-auto rounded-lg">
-                    <div class="p-4 flex"><a href="demo.html?id=${p.id}" class="bg-slate-900 text-white w-full py-3 rounded-lg font-bold text-center"><i class="fa-solid fa-desktop"></i> Live Preview</a></div>
-                </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
-                    <h2 class="text-2xl font-bold mb-4">Về mẫu giao diện này</h2>
-                    <p class="text-slate-600 dark:text-slate-400 mb-6">${p.desc}</p>
-                </div>
-                ${relatedHTML} <!-- Gắn phần Gợi ý vào đây -->
+            <div class="bg-white dark:bg-slate-800 rounded-xl border p-6 shadow-sm mt-8 w-full lg:w-2/3">
+                <h3 class="text-xl font-bold mb-6 border-b pb-4">Đánh giá từ khách hàng</h3>
+                <div id="reviews-list" class="mb-8 max-h-64 overflow-y-auto"></div>
+                <form id="review-form" class="bg-slate-50 p-6 rounded-xl border">
+                    <h4 class="font-bold mb-4">Viết đánh giá của bạn</h4>
+                    <div class="flex gap-4 mb-4">
+                        <select id="review-rating" class="p-2 border rounded-lg focus:ring-2 focus:ring-amber-400">
+                            <option value="5">⭐⭐⭐⭐⭐ Tuyệt vời</option>
+                            <option value="4">⭐⭐⭐⭐ Rất tốt</option>
+                            <option value="3">⭐⭐⭐ Tạm được</option>
+                        </select>
+                    </div>
+                    <textarea id="review-comment" required rows="3" class="w-full p-3 border rounded-lg mb-4" placeholder="Code rất sạch và dễ hiểu..."></textarea>
+                    <button type="submit" class="bg-slate-900 text-white px-6 py-2 rounded-lg font-bold">Gửi đánh giá</button>
+                </form>
+                ${relatedHTML}
             </div>
 
-            <!-- Cột phải (Khung Mua Hàng) -->
-            <div class="lg:w-1/3">
-                <div class="sticky top-24 space-y-6">
-                    <div class="bg-white dark:bg-slate-800 rounded-xl border border-indigo-200 dark:border-indigo-900 shadow-xl p-6">
-                        <div class="text-4xl font-extrabold text-slate-900 dark:text-white mb-6">$${p.price}</div>
-                        <button onclick="App.addToCart(${p.id})" class="w-full bg-indigo-600 text-white font-bold py-4 rounded-lg flex justify-center items-center gap-2"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ</button>
+            <div class="w-full lg:w-1/3">
+                <div class="sticky top-24">
+                    <img src="${p.image}" class="w-full rounded-xl shadow-sm mb-4">
+                    <h1 class="text-2xl font-bold mb-2 text-slate-900 dark:text-white">${p.name}</h1>
+                    <div class="text-3xl font-black text-indigo-600 mb-4">$${p.price}</div>
+                    <div class="flex flex-col gap-3 mt-6">
+                        <button id="btn-add-cart" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-3.5 rounded-xl border border-indigo-200 transition-colors flex justify-center items-center gap-2">
+                            <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+                        </button>
+                        <button id="btn-buy-now" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition-transform transform hover:-translate-y-1 flex justify-center items-center gap-2">
+                            <i class="fa-solid fa-bolt"></i> Mua ngay
+                        </button>
                     </div>
                 </div>
             </div>
         `;
+
+        // Gắn sự kiện cho nút ở cột phải vừa tạo
+        document.getElementById('btn-add-cart').onclick = () => App.addToCart(p.id);
+        document.getElementById('btn-buy-now').onclick = () => App.buyNow(p.id);
+        App.renderReviews(p);
     }
 </script>
 </body>

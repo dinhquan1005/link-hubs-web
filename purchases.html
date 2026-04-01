@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài khoản của tôi | WebMarket</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>tailwind.config = { darkMode: 'class' }</script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 transition-colors duration-200 text-slate-800 dark:text-slate-200 font-sans min-h-screen flex flex-col">
+
+    <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-indigo-600"></i> WebMarket
+            </a>
+            <div class="flex items-center gap-4 sm:gap-6 md:gap-8">
+                <div id="auth-menu-container" class="flex items-center"></div>
+                <div class="w-px h-6 bg-slate-300 dark:bg-slate-700 hidden sm:block"></div>
+                <button id="theme-toggle" class="text-slate-500 hover:text-indigo-600 transition-colors text-lg"><i class="fa-solid fa-moon"></i></button>
+                <a href="cart.html" class="relative text-slate-700 dark:text-slate-300 hover:text-indigo-600 transition-colors text-xl">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cart-badge" class="absolute -top-2 -right-2 bg-rose-500 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center border-2 border-white dark:border-slate-900 box-content">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-10 max-w-5xl flex-1">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+            <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white"><i class="fa-solid fa-user-circle text-indigo-500 mr-2"></i> Tài khoản cá nhân</h1>
+            
+            <div class="flex bg-white dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm w-full md:w-auto">
+                <button id="tab-purchases" class="flex-1 md:flex-none px-6 py-3 font-bold rounded-xl transition-all bg-indigo-50 text-indigo-700 shadow-sm">Code đã mua</button>
+                <button id="tab-wishlist" class="flex-1 md:flex-none px-6 py-3 font-bold rounded-xl transition-all text-slate-500 hover:text-slate-900 dark:hover:text-white">Yêu thích</button>
+            </div>
+        </div>
+
+        <div id="account-content" class="min-h-[400px]">
+            </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-auto">
+        <div class="container mx-auto text-center"><p>&copy; 2024 WebMarket. Tủ đồ số của bạn.</p></div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
