@@ -1,36 +1,72 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Demo</title>
+    <title>Live Preview | WebMarket</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { 
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] } } }
+        }
+    </script>
     <style>
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3b82f6; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        .loader { 
+            border: 3px solid rgba(255,255,255,0.1); 
+            border-top: 3px solid #6366f1; 
+            border-radius: 50%; 
+            width: 50px; 
+            height: 50px; 
+            animation: spin 1s linear infinite; 
+        }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="h-screen w-screen overflow-hidden flex flex-col bg-slate-900">
+<body class="h-screen w-screen overflow-hidden flex flex-col bg-[#0b0f19] text-slate-200 font-sans">
 
-    <div class="h-14 bg-slate-900 text-white flex items-center justify-between px-4 border-b border-slate-800 shadow-md flex-shrink-0 z-10">
-        <a href="index.html" class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors">
-            <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">Quay lại</span>
-        </a>
-        <div id="demo-title" class="font-semibold text-lg tracking-wide hidden sm:block"></div>
-        <button id="buy-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded text-sm font-bold transition-colors flex items-center gap-2">
-            <i class="fa-solid fa-cart-shopping"></i> Mua Ngay
-        </button>
-    </div>
-
-    <div class="relative flex-1 w-full bg-white">
-        <div id="loader-overlay" class="absolute inset-0 bg-white flex flex-col items-center justify-center z-10 transition-opacity duration-500">
-            <div class="loader mb-4"></div><p class="text-slate-600 font-medium">Đang tải demo...</p>
+    <div class="h-16 bg-[#0b0f19]/80 backdrop-blur-xl flex items-center justify-between px-6 border-b border-slate-800/80 shadow-lg flex-shrink-0 z-20">
+        
+        <div class="flex items-center gap-6">
+            <a href="index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors font-bold bg-slate-800/50 hover:bg-slate-700 px-4 py-2.5 rounded-xl border border-slate-700/50">
+                <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">Quay lại Sàn</span>
+            </a>
+            <div class="w-px h-6 bg-slate-800 hidden sm:block"></div>
+            <div class="hidden md:flex items-center gap-2 text-indigo-500 font-black tracking-tight text-lg">
+                <i class="fa-solid fa-layer-group"></i> WebMarket
+            </div>
         </div>
-        <iframe id="demo-frame" src="" class="w-full h-full border-none"></iframe>
+        
+        <div id="demo-title" class="font-extrabold text-base tracking-wide hidden lg:block text-white truncate max-w-md text-center"></div>
+        
+        <div class="flex items-center gap-3">
+            <button id="new-tab-btn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 shadow-sm border border-slate-700">
+                <i class="fa-solid fa-up-right-from-square text-xs"></i> <span class="hidden sm:inline">Mở Toàn màn hình</span>
+            </button>
+            <button id="buy-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-black transition-all flex items-center gap-2 shadow-lg shadow-indigo-500/30 transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-cart-shopping"></i> Mua Ngay
+            </button>
+        </div>
     </div>
 
-    <!-- CHỈ CẦN GỌI MAIN.JS LÀ ĐỦ -->
+    <div class="relative flex-1 w-full bg-white dark:bg-[#0b0f19]">
+        
+        <div id="loader-overlay" class="absolute inset-0 bg-[#0b0f19] flex flex-col items-center justify-center z-10 transition-opacity duration-700">
+            <div class="loader mb-6"></div>
+            <p class="text-white font-black text-2xl mb-2 tracking-tight">Đang kết nối Live Demo...</p>
+            <p class="text-slate-400 text-sm font-medium">Hệ thống đang trích xuất tệp tĩnh, vui lòng chờ trong giây lát.</p>
+        </div>
+        
+        <iframe 
+            id="demo-frame" 
+            src="" 
+            class="w-full h-full border-none bg-white"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"
+        ></iframe>
+    </div>
+
     <script src="assets/js/main.js"></script>
 </body>
 </html>

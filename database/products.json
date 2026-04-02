@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1775117565020,
+        "name": "Property",
+        "category": "admin",
+        "price": 20,
+        "sales": 0,
+        "rating": 5,
+        "author": "admin",
+        "image": "https://themewagon.com/wp-content/uploads/2018/07/Electro-free-bootstrap-ecommerce-template.jpg",
+        "desc": "<p>bbb</p>",
+        "demoUrl": "templates_demo/Property_1775117563701/electro-master/index.html",
+        "downloadUrl": "templates_demo/Property_1775117563701/Property.zip"
+    },
+    {
+        "id": 1775112672382,
+        "name": "res",
+        "category": "shop",
+        "price": 20,
+        "sales": 0,
+        "rating": 5,
+        "author": "admin",
+        "image": "https://themewagon.com/wp-content/uploads/2021/05/Restaurantly-1200x736-1.png",
+        "desc": "<p><strong>CLC</strong></p>",
+        "demoUrl": "templates_demo/res_1775112669812/restaurantly-1.0.0/index.html",
+        "downloadUrl": "templates_demo/res_1775112669812/res.zip"
+    },
+    {
+        "id": 1,
+        "name": "Feane - Nhà hàng cao cấp",
+        "category": "shop",
+        "price": 29,
+        "sales": 145,
+        "rating": 5,
+        "author": "ThemeOcean",
+        "image": "https://themewagon.com/wp-content/uploads/2021/10/feane-1.png",
+        "demoUrl": "https://themewagon.github.io/feane/"
+    },
+    {
+        "id": 2,
+        "name": "Sneat - Admin Dashboard",
+        "category": "admin",
+        "price": 49,
+        "sales": 1250,
+        "rating": 5,
+        "author": "ProCoder",
+        "image": "https://themewagon.com/wp-content/uploads/2024/09/FoodMart-1200x736.webp",
+        "demoUrl": "https://themewagon.github.io/sneat-html-admin-template-free/"
+    }
+]

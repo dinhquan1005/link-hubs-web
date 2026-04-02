@@ -1,103 +1,131 @@
 <!DOCTYPE html>
-<html lang="vi" class="light">
+<html lang="vi" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebMarket | Chợ Giao Diện Cao Cấp</title>
+    <title>WebMarket | Sàn Giao Diện Cao Cấp</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>tailwind.config = { darkMode: 'class' }</script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { 
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: { brand: { 50: '#eef2ff', 500: '#6366f1', 600: '#4f46e5', 900: '#312e81' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-grid-pattern { background-size: 40px 40px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px); }
+        body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 transition-colors duration-200 text-slate-800 dark:text-slate-200 font-sans">
+<body class="bg-[#f8fafc] dark:bg-[#0b0f19] transition-colors duration-300 text-slate-800 dark:text-slate-200">
 
-    <!-- Header chuyên nghiệp -->
-    <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-            
-            <!-- Logo bên trái -->
-            <a href="index.html" class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center gap-2">
-                <i class="fa-solid fa-layer-group text-indigo-600"></i> WebMarket
+    <header class="bg-white/70 dark:bg-[#0b0f19]/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 fixed top-0 w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 sm:py-5 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-extrabold flex items-center gap-2 tracking-tight">
+                <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-layer-group text-white text-sm"></i>
+                </div>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">WebMarket</span>
             </a>
             
-            <!-- Menu bên phải -->
-            <div class="flex items-center gap-5 md:gap-8">
-                <!-- Khu vực hiển thị Nút Đăng nhập hoặc Avatar User (Được JS tự động điền) -->
-                <div id="auth-menu-container" class="hidden md:flex items-center gap-4">
-                    <!-- JS sẽ render UI vào đây -->
-                </div>
-
-                <div class="w-px h-6 bg-slate-300 dark:bg-slate-700 hidden md:block"></div>
-                
-                <button id="theme-toggle" class="text-slate-500 hover:text-indigo-600 transition-colors text-lg"><i class="fa-solid fa-moon"></i></button>
-                
-                <a href="cart.html" class="relative text-slate-700 dark:text-slate-300 hover:text-indigo-600 transition-colors text-xl">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span id="cart-badge" class="absolute -top-2 -right-2 bg-rose-500 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center border-2 border-white dark:border-slate-900 box-content">0</span>
+            <div class="flex items-center gap-4 md:gap-6">
+                <div id="auth-menu-container" class="hidden sm:flex items-center gap-4"></div>
+                <div class="w-px h-6 bg-slate-200 dark:bg-slate-800 hidden sm:block"></div>
+                <button id="theme-toggle" class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"><i class="fa-solid fa-moon text-lg"></i></button>
+                <a href="cart.html" class="relative w-10 h-10 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute top-1 right-1 translate-x-1 -translate-y-1 bg-rose-500 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center border-2 border-white dark:border-[#0b0f19]">0</span>
                 </a>
             </div>
-            
         </div>
     </header>
 
-    <!-- Hero Section phong cách ThemeForest -->
-    <section class="relative bg-slate-900 text-white overflow-hidden">
-        <!-- Background Pattern/Gradient -->
-        <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 via-slate-900 to-purple-900 opacity-90"></div>
-        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'#ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    <section class="relative pt-32 pb-24 lg:pt-48 lg:pb-40 overflow-hidden bg-slate-950 text-white mt-0">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" alt="Background" class="w-full h-full object-cover opacity-30 mix-blend-screen">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/50 to-[#f8fafc] dark:to-[#0b0f19]"></div>
+        </div>
         
-        <div class="relative container mx-auto px-4 py-20 lg:py-28 text-center z-10">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight">Xây dựng Website <br class="md:hidden"><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">hoàn hảo</span> của bạn</h1>
-            <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto font-light">Khám phá hàng trăm mẫu HTML, Admin Dashboard và giao diện thương mại điện tử chất lượng cao từ các chuyên gia.</p>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-fuchsia-600/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
+        
+        <div class="relative container mx-auto px-4 text-center z-10 max-w-4xl">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 backdrop-blur-md mb-8 shadow-lg">
+                <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-200">Hơn 500+ Giao diện đang được bán</span>
+            </div>
             
-            <!-- Thanh tìm kiếm -->
-            <div class="max-w-3xl mx-auto bg-white rounded-full p-2 flex shadow-2xl focus-within:ring-4 focus-within:ring-indigo-500/30 transition-all">
-                <div class="flex items-center pl-4 pr-2 text-slate-400"><i class="fa-solid fa-search"></i></div>
-                <input type="text" id="search-input" placeholder="Tìm kiếm ví dụ: 'organic', 'admin dashboard'..." class="flex-1 bg-transparent border-none focus:outline-none text-slate-800 px-2 py-3 w-full text-base">
-                <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-full font-bold transition-colors">Tìm kiếm</button>
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight leading-[1.1]">
+                Khởi tạo Website với <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-fuchsia-400">Mã nguồn Đỉnh cao</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto font-medium leading-relaxed">Bộ sưu tập giao diện HTML, React, Vue và Admin Dashboard chất lượng cao từ các lập trình viên hàng đầu thế giới.</p>
+            
+            <div class="bg-white/10 backdrop-blur-md p-2 rounded-2xl shadow-2xl flex items-center max-w-2xl mx-auto border border-white/20 focus-within:bg-white/20 transition-all duration-300">
+                <div class="pl-4 pr-2 text-slate-300"><i class="fa-solid fa-search text-lg"></i></div>
+                <input type="text" id="search-input" placeholder="Bạn đang tìm kiếm giao diện gì?" class="flex-1 bg-transparent border-none focus:outline-none text-white px-2 py-3 w-full text-base md:text-lg font-medium placeholder-slate-300">
+                <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold transition-all shadow-md">Khám phá</button>
             </div>
         </div>
     </section>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-16">
-        <!-- Category Filters & Sorting -->
-        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <i class="fa-solid fa-fire text-orange-500"></i> Mẫu mới nổi bật
-            </h2>
+    <main class="container mx-auto px-4 py-16 lg:py-20 relative z-20">
+        
+        <div class="flex flex-col lg:flex-row justify-between items-center mb-12 gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-1.5 h-8 bg-indigo-500 rounded-full"></div>
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Sản phẩm Nổi bật</h2>
+            </div>
             
-            <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
-                <!-- Tabs Lọc -->
-                <div class="flex flex-wrap justify-center gap-2 bg-slate-200/50 dark:bg-slate-800/50 p-1.5 rounded-full border border-slate-200 dark:border-slate-700">
-                    <button class="filter-btn bg-white dark:bg-slate-700 text-slate-800 dark:text-white px-5 py-2 rounded-full font-semibold shadow-sm transition-all text-sm" data-cat="all">Tất cả</button>
-                    <button class="filter-btn text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white px-5 py-2 rounded-full font-semibold transition-all text-sm" data-cat="shop">E-Commerce</button>
-                    <button class="filter-btn text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white px-5 py-2 rounded-full font-semibold transition-all text-sm" data-cat="admin">Admin Dashboard</button>
-                </div>
-
-                <!-- Dropdown Sắp xếp -->
-                <div class="relative w-full sm:w-auto">
-                    <select id="sort-select" class="appearance-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium py-2 pl-4 pr-10 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full sm:w-auto cursor-pointer shadow-sm">
-                        <option value="newest">Mới nhất</option>
-                        <option value="popular">Bán chạy nhất</option>
-                        <option value="price-asc">Giá: Thấp đến Cao</option>
-                        <option value="price-desc">Giá: Cao xuống Thấp</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down absolute right-4 top-3 text-slate-400 pointer-events-none text-sm"></i>
+            <div class="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
+                <div class="flex flex-wrap justify-center gap-2 bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <button class="filter-btn px-6 py-2.5 rounded-xl font-bold transition-all text-sm bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md" data-cat="all">Tất cả</button>
+                    <button class="filter-btn px-6 py-2.5 rounded-xl font-bold transition-all text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white" data-cat="shop">Bán hàng</button>
+                    <button class="filter-btn px-6 py-2.5 rounded-xl font-bold transition-all text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white" data-cat="admin">Admin</button>
                 </div>
             </div>
         </div>
 
-        <!-- Grid Render từ JS -->
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- App.js sẽ điền html vào đây -->
+        <div class="flex flex-col lg:flex-row gap-10">
+            
+            <div id="product-grid" class="flex-1 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                </div>
+
+            <aside class="w-full lg:w-80 flex-shrink-0">
+                <div class="sticky top-28 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800/80 p-8 shadow-2xl shadow-indigo-500/5 overflow-hidden relative">
+                    <div class="absolute -bottom-10 -right-10 w-24 h-24 bg-emerald-500/10 rounded-full blur-[50px] pointer-events-none"></div>
+
+                    <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-100 dark:border-slate-800">
+                        <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Live WebMarket Feed</h3>
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse border-2 border-emerald-100 dark:border-emerald-950"></span>
+                    </div>
+
+                    <div id="activity-feed" class="space-y-6 max-h-[500px] overflow-y-auto pr-3 font-medium text-sm text-slate-600 dark:text-slate-400">
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-satellite-dish text-emerald-500 mt-0.5"></i> <p>Hệ thống Database Server đã trực tuyến.</p></div>
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-check text-indigo-500 mt-0.5"></i> <p>Đang đồng bộ dữ liệu với 3 nút CDN Pro Max...</p></div>
+                    </div>
+                </div>
+            </aside>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-10">
+    <footer class="bg-white dark:bg-[#0b0f19] border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
         <div class="container mx-auto px-4 text-center">
-            <p class="mb-4 text-white font-bold text-xl"><i class="fa-solid fa-layer-group text-indigo-500"></i> WebMarket</p>
-            <p class="text-sm">&copy; 2024 WebMarket Marketplace. Mọi quyền được bảo lưu.</p>
+            <a href="#" class="text-3xl font-black text-slate-900 dark:text-white flex items-center justify-center gap-2 mb-6">
+                <i class="fa-solid fa-layer-group text-indigo-500"></i> WebMarket.
+            </a>
+            <p class="text-slate-500 font-medium max-w-md mx-auto mb-8">Nền tảng mua bán mã nguồn, giao diện website uy tín và chất lượng nhất dành cho nhà phát triển.</p>
+            <div class="flex justify-center gap-6 mb-12">
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center hover:bg-indigo-500 hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center hover:bg-indigo-500 hover:text-white transition-all"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center hover:bg-indigo-500 hover:text-white transition-all"><i class="fa-brands fa-dribbble"></i></a>
+            </div>
+            <p class="text-sm font-semibold text-slate-400">© 2024 WebMarket Inc. Mọi quyền được bảo lưu.</p>
         </div>
     </footer>
 

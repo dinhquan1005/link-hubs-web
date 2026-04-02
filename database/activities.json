@@ -1,0 +1,18 @@
+[
+    {
+        "type": "publish",
+        "msg": "Hệ thống Database Pro Max đã trực tuyến!"
+    },
+    {
+        "type": "register",
+        "msg": "Admin Tâm Quyết vừa khởi tạo sàn giao dịch."
+    },
+    {
+        "type": "publish",
+        "msg": "<span class=\"font-bold text-indigo-500\">admin</span> vừa phát hành siêu phẩm <span class=\"font-bold\">res</span>"
+    },
+    {
+        "type": "publish",
+        "msg": "<span class=\"font-bold text-indigo-500\">admin</span> vừa phát hành siêu phẩm <span class=\"font-bold\">Property</span>"
+    }
+]
